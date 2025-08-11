@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  dspy-demo:
+    build: .
+    container_name: dspy-structured-output
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - XAI_API_KEY=${XAI_API_KEY:-}
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    interactive: true
+    tty: true
+    command: /bin/bash
