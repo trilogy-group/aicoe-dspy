@@ -1,6 +1,6 @@
 """
 Real API Testing Script for GEPA JSON Consistency
-Tests actual API calls to GPT-5, Claude Opus 4.1, Gemini 2.5 Pro, Grok 4
+Tests actual API calls to GPT-5, Claude Opus 5, Gemini 2.5 Pro, Grok 4
 
 Set your API keys as environment variables:
 export OPENAI_API_KEY="your_key_here"
@@ -76,8 +76,8 @@ def test_openai_gpt5():
         print(f"   ❌ GPT-5 Error: {str(e)}")
         return {"error": str(e)}
 
-def test_anthropic_opus41():
-    """Test Claude Opus 4.1"""
+def test_anthropic_opus5():
+    """Test Claude Opus 5"""
     api_key = os.getenv("ANTHROPIC_API_KEY")
     if not api_key:
         return {"error": "ANTHROPIC_API_KEY not set"}
@@ -99,11 +99,11 @@ def test_anthropic_opus41():
         
         Extract JSON with fields: name, email, age (as number), is_active (as boolean)'''
         
-        print("🤖 Testing Claude Opus 4.1...")
+        print("🤖 Testing Claude Opus 5...")
         start_time = time.time()
         
         response = client.messages.create(
-            model="claude-opus-4-1-20250805",
+            model="claude-opus-5",
             max_tokens=1000,
             messages=[{"role": "user", "content": test_prompt}]
         )
@@ -111,7 +111,7 @@ def test_anthropic_opus41():
         response_time = time.time() - start_time
         content = response.content[0].text
         
-        print(f"   ✅ Opus 4.1 Response ({response_time:.2f}s):")
+        print(f"   ✅ Opus 5 Response ({response_time:.2f}s):")
         print(f"   📄 Raw: {content}")
         
         # Try to extract JSON
@@ -134,7 +134,7 @@ def test_anthropic_opus41():
             return {"success": False, "raw_content": content}
             
     except Exception as e:
-        print(f"   ❌ Opus 4.1 Error: {str(e)}")
+        print(f"   ❌ Opus 5 Error: {str(e)}")
         return {"error": str(e)}
 
 def test_gemini_25_pro():
@@ -274,14 +274,14 @@ def test_xai_grok4():
 def main():
     """Run comprehensive API testing"""
     print("🚀 REAL API TESTING - Latest Models")
-    print("Testing GPT-5, Claude Opus 4.1, Gemini 2.5 Pro, Grok 4")
+    print("Testing GPT-5, Claude Opus 5, Gemini 2.5 Pro, Grok 4")
     print("=" * 60)
     
     # Check which APIs are available
     available_apis = []
     api_checks = {
         "OPENAI_API_KEY": "GPT-5",
-        "ANTHROPIC_API_KEY": "Claude Opus 4.1", 
+        "ANTHROPIC_API_KEY": "Claude Opus 5", 
         "GEMINI_API_KEY": "Gemini 2.5 Pro",
         "XAI_API_KEY": "xAI Grok 4"
     }
@@ -311,7 +311,7 @@ def main():
         results["GPT-5"] = test_openai_gpt5()
     
     if os.getenv("ANTHROPIC_API_KEY"):
-        results["Claude Opus 4.1"] = test_anthropic_opus41()
+        results["Claude Opus 5"] = test_anthropic_opus5()
     
     if os.getenv("GEMINI_API_KEY"):
         results["Gemini 2.5 Pro"] = test_gemini_25_pro()
